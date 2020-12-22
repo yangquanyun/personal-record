@@ -33,3 +33,24 @@ export function computeImageInfo (imgSrc, maxWidth, maxHeight) {
         };
     });
 }
+
+/**
+ * 安全取值
+ * 取student.userInfo.name
+ * safeGet('userInfo.name',student);
+ * safeGet(['userInfo','name'],student);
+ * 没有值返回undefined
+ */
+export function safeGet (s, o) {
+    let p = [];
+    if (Array.isArray(s)) {
+        p = s;
+    } else {
+        p = s.split('.');
+    }
+    if (Array.isArray(p)) {
+        return p.reduce((xs, x) => (xs && xs[x]) ? xs[x] : undefined, o);
+    } else {
+        return undefined;
+    }
+}
