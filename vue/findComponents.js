@@ -5,7 +5,7 @@
  */
 
 /**
- * 向上查找组件
+ * 向上查找指定组件，只会找到最近的一个组件的实例
  * @param context 当前组件上下文对象
  * @param componentName 组件名
  */
@@ -18,6 +18,23 @@ const findUpwardComponent = (context, componentName) => {
     }
     return parent;
 }
+
+/**
+ * 向上找到所有的指定组件
+ * @param context 当前组件上下文对象
+ * @param componentName 组件名
+ */
+const findUpwardComponents = (context, componentName) => {
+    let parents = [];
+    const parent = context.$parent;
+    if (parent) {
+        const name = parent.$options.name;
+        if (name && name.includes(componentName)) parents.push(parent);
+        return parents.concat(findUpwardComponents(parent, componentName));
+    } else {
+        return [];
+    }
+};
 
 /**
  * 向下查找组件
@@ -57,4 +74,4 @@ const findBrotherComponents = (context, componentName, exceptMe = true) => {
     return $brothers;
 }
 
-export {findUpwardComponent, findDownwardComponent, findBrotherComponents}
+export {findUpwardComponent, findUpwardComponents, findDownwardComponent, findBrotherComponents}
