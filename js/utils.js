@@ -54,3 +54,113 @@ export function safeGet (s, o) {
         return undefined;
     }
 }
+
+/**
+ * 并发请求数量限制
+ * @param arr 包含发起请求的promise对象的数组
+ * @param count 同时请求的数量
+ * @returns {Function} 传入false时中断后续请求
+ */
+
+export function $concurrent (arr, count = 4) {
+    /* 并发发起四个请求，其中任一请求结束后，发起新的请求，保持并发请求数量不超过四个 */
+    return new Promise((resolve, reject) => {
+        let g = generator();
+        let keep = true;
+        let result = [];
+        for (let i = 0; i < count; i++) {
+            nextCall();
+        }
+
+        function nextCall () {
+            let { value, done } = g.next();
+            done || value.then((data) => {
+                if (data === 'reject') {
+                    resolve(result);
+                    return;
+                }
+                result.push(data);
+                if (result.length === arr.length) {
+                    keep = false;
+                    resolve(result);
+                }
+                keep && nextCall();
+            }).catch(() => {
+                keep = false;
+                reject(new Error());
+            });
+        }
+
+        function * generator () {
+            if (arr.length === 0) {
+                yield Promise.resolve('reject');
+            }
+            for (let fn of arr) {
+                try {
+                    yield fn();
+                } catch (e) {
+                    return e;
+                }
+            }
+        }
+    });
+}
+
+/**
+ * 随机生成id
+ * @param n 默认32位
+ * @returns {string}
+ */
+export function $randomId (n = 32) {
+    let s = '';
+    Array.from({ length: n }).forEach((v, i) => {
+        let r = Math.floor(Math.random() * 36);
+        if (r < 10) {
+            s += r;
+        } else {
+            s += String.fromCharCode(r + 87);
+        }
+        if ([7, 11, 15, 19].includes(i)) s += '-';
+    });
+    return s;
+}
+
+/**
+ * 查找子类元素
+ * @param param
+ * @returns {*}
+ * @constructor
+ */
+export function $find (el, cls) {
+    if (!el) return [];
+    let res = [];
+    if (el.length) {
+        Array.from(el).forEach(e => {
+            res.push(...$find(e, cls));
+        });
+    } else {
+        if (Array.from(el.classList).includes(cls)) {
+            res.push(el);
+        }
+        if (el.children && el.children.length) {
+            res.push(...$find(el.children, cls));
+        }
+    }
+    return res;
+}
+
+/**
+ * 查找最近的父级元素
+ * @param param
+ * @returns {*}
+ * @constructor
+ */
+export function $closest (el, selector) {
+    let name = el.localName;
+    if (name === selector) {
+        return el;
+    } else if (name !== 'html') {
+        return $closest(el.parentNode, selector);
+    }
+    return null;
+}
