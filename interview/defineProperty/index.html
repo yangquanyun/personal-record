@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <div id="app">
+        <input type="text" id="a">
+        <span id="b"></span>
+    </div>
+</body>
+<script>
+    let obj = {}; // 定义空对象
+    let val = 'yang'; // 赋予初始值
+    Object.defineProperty(obj, 'val', {
+        // 定义要修改对象的属性
+        get: function () {
+            return val;
+        },
+        set: function (newVal) {
+            val = newVal; // 定义val等于修改后的内容
+            document.getElementById('a').value = val;
+            document.getElementById('b').innerHTML = val;
+        }
+    });
+    document.addEventListener('keyup', function (e) {
+        // 当在文本框输入内容时让对象里你定义的val等于文本框的值
+        obj.val = e.target.value;
+    })
+</script>
+</html>

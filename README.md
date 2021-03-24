@@ -1,5 +1,6 @@
 # tool-function
 常见的工具函数仓库
++ arithmetic——算法题
 + interview——面试题合集
 + md——markdown笔记
 + scss——常用的scss函数
