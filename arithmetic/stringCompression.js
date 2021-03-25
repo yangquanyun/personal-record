@@ -15,3 +15,22 @@ const stringCount = str => {
     }, [])
     return result.join('');
 }
+
+/**
+ * 解法二
+ * @param sourceStr
+ * @returns {string}
+ */
+const compressString = sourceStr => {
+    let count=1;
+    let resultStr = '';
+    for(let i = 1; i < sourceStr.length + 1; i++){
+        if(sourceStr[i-1] === sourceStr[i]){
+            count++
+        } else {
+            resultStr += sourceStr.slice(i-1, i) + (count === 1 ? '' : count)
+            count = 1
+        }
+    }
+    return resultStr
+};
