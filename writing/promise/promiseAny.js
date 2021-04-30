@@ -1,4 +1,5 @@
 /**
+ * https://mp.weixin.qq.com/s/UFKkUZ0LDGhKJgUqcQwNnQ
  * Promise.any()是ES2021新增的特性，它接收一个Promise可迭代对象（例如数组）
  * 只要其中的一个promise成功，就返回那个已经成功的Promise
  * 如果可迭代对象中没有一个成功（即所有的promises都失败），就返回一个失败的promise和AggregateError类型的实例，它是Error的一个子类，用于把单一的错误集合在一起
