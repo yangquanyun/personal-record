@@ -1,4 +1,5 @@
 /**
+ * 防抖
  * 概念：n秒后在执行该事件，若在n秒内被重复触发，则重新计时（延时执行，如果在延时的时间内多次触发，则重新计时）
  * 过程：当事件A发生时，设置一个定时器，a秒后触发A的回调函数，如果在a秒内有新的同一事件发生，则清楚定时器，并重新开始计时
  * 又在a秒后触发A的回调，注意：上次的A的回调并未触发，而是定时器被清除了，定时器中A的回调就不会被执行
@@ -11,9 +12,9 @@
  */
 function $debounce(fn, wait, immediate){
     let timeout;
-    return function (...rest) {
+    return function () {
         let context = this;
-        let args = rest;
+        let args = arguments;
 
         if (timeout) clearTimeout(timeout); // timeout不为null
 
@@ -28,7 +29,7 @@ function $debounce(fn, wait, immediate){
         } else {
             timeout = setTimeout(() => {
                 fn.apply(context, args)
-            })
+            }, wait)
         }
     }
 }
