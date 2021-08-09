@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片预览</title>
+</head>
+<body>
+<input type="file" onchange="loadFile(event)">
+<img id="previewContainer" alt="" src="">
+</body>
+<script>
+    function loadFile(event) {
+        const reader = new FileReader();
+        reader.readAsDataURL(event.target.files[0])
+        reader.onload = function () {
+            const output = document.querySelector('#previewContainer');
+            output.src = reader.result;
+        };
+    }
+</script>
+</html>

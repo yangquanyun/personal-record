@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>图片预览</title>
+</head>
+<body>
+<img id="previewContainer" alt="" src="" style="width: 50%">
+</body>
+<script>
+    const image = document.querySelector('#previewContainer');
+    fetch('https://gimg2.baidu.com/image_search/src=http%3A%2F%2Fhbimg.b0.upaiyun.com%2F8138b202eb5c505b4e46159b2642477205c6b42c14bb5-FWbB38_fw658&refer=http%3A%2F%2Fhbimg.b0.upaiyun.com&app=2002&size=f9999,10000&q=a80&n=0&g=0n&fmt=jpeg?sec=1628928976&t=5e9f3b7f70c32cc17f87500920124a75')
+    .then((response) => response.blob())
+    .then((blob) => {
+        image.src = URL.createObjectURL(blob);
+    })
+</script>
+</html>
