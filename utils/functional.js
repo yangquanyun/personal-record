@@ -31,3 +31,13 @@ export const average = (...args) => args.reduce((a, b) => a + b) / args.length;
 // 转换华氏度/摄氏度
 export const celsiusToFahrenheit = (celsius) => celsius * 9/5 + 32;
 export const fahrenheitToCelsius = (fahrenheit) => (fahrenheit - 32) * 5/9;
+
+
+// 检查对象是否为空
+const isEmpty = obj => Reflect.ownKeys(obj).length === 0 && obj.constructor === Object;
+
+// 计算两个日期之间的天数差
+const daysBetween = (date1, date2) => Math.ceil(Math.abs(date1 - date2) / (1000 * 60 * 60 * 24))
+
+// 获取随机布尔值
+const getRandomBoolean = () => Math.random() >= 0.5
