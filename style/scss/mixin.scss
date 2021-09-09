@@ -1,0 +1,42 @@
+// BEM命名规则
+@mixin b($block) {
+  .#{$block} {
+    @content;
+  }
+}
+
+@mixin e($element) {
+  @at-root &__#{$element} {
+    @content;
+  }
+}
+
+@mixin m($modifier) {
+  @at-root &--#{$modifier} {
+    @content;
+  }
+}
+
+//添加浏览器前缀
+@mixin browserPrefix($propertyName,$value) {
+  @each $prefix in -webkit-, -moz-, -ms-, -o-, '' {
+    #{$prefix}#{$propertyName}: $value;
+  }
+}
+
+// 单行文本超出显示省略号
+@mixin singleEllipsis() {
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+// 多行文本超出显示省略号
+@mixin multipleEllipsis($line) {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: $line;
+}
+

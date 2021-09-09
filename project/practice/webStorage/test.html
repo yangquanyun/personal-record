@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<script type="module">
+    import CustomStorage from "./webStorage.js";
+    const customStorage  = new CustomStorage();
+    customStorage .bootStrap({
+        mode: 'local',
+    });
+    customStorage.setItem('test01', '111')
+    // customStorage.changeItem('test01', (oldValue) =>{
+    //     console.log(oldValue, 'oldValue')
+    //     return oldValue + '123456';
+    // })
+</script>
+</body>
+</html>
