@@ -24,19 +24,38 @@
   }
 }
 
-// 单行文本超出显示省略号
-@mixin singleEllipsis() {
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+/**
+* 溢出省略号
+* @param {Number} 行数
+*/
+@mixin ellipsis($rowCount: 1) {
+  @if $rowCount <=1 {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  } @else {
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: $rowCount;
+    -webkit-box-orient: vertical;
+  }
 }
 
-// 多行文本超出显示省略号
-@mixin multipleEllipsis($line) {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: $line;
+// 文本居中
+@mixin center($height:100%){
+  height: $height;
+  line-height: $height;
+  text-align: center
+}
+
+// flex布局
+@mixin flex ($direction: row, $justify-content: flex-start, $align-items: flex-start,$flex-wrap: nowrap) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify-content;
+  align-items: $align-items;
+  flex-wrap: $flex-wrap;
 }
 
