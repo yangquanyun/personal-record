@@ -31,3 +31,5 @@ const cat = new Animal('Cat');
 cat.run();
 const dog = new Animal('Dog');
 dog.run();
+
+console.log('test')
